@@ -1,6 +1,8 @@
 name: Update Node.js
 
 on:
+  schedule:
+    - cron: '0 13 * * 0'
   workflow_dispatch:
   workflow_call:
     secrets:
@@ -20,7 +22,7 @@ jobs:
       - name: Create a pull request with the updated files
         uses: branoholy/update-files-action@main
         with:
-          token: ${{ secrets.token }}
+          token: ${{ secrets.token || secrets.CLUENAR_BOT_TOKEN }}
           branch.name: deps-update-node
           branch.recreate: true
           commit.paths: |

@@ -44,4 +44,4 @@ jobs:
           context: Status / CI
           state: ${{ env.CI_STATE }}
           description: ${{ env.CI_DESCRIPTION }}
-          GITHUB_TOKEN: ${{ secrets.token }}
+          GITHUB_TOKEN: ${{ secrets.token || secrets.CLUENAR_BOT_TOKEN }}

@@ -1,0 +1,53 @@
+{
+  "name": "@cluenar/actions",
+  "version": "0.1.0",
+  "description": "A repository of shared GitHub actions.",
+  "author": "Branislav Holý <brano@holy.am>",
+  "repository": "git@github.com/cluenar/actions.git",
+  "bugs": {
+    "url": "https://github.com/cluenar/actions/issues"
+  },
+  "homepage": "https://github.com/cluenar/actions#readme",
+  "license": "MIT",
+  "engines": {
+    "node": "17.4.0"
+  },
+  "scripts": {
+    "lint": "eslint 'src/**'",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:all": "eslint '**' && prettier --check '**'",
+    "lint:staged": "lint-staged",
+    "lint:commit": "commitlint",
+    "type-check": "tsc",
+    "type-check:watch": "tsc --watch",
+    "node-versions-update": "babel-node --extensions '.ts' scripts/update-node-versions.ts",
+    "postinstall": "[ -d .git ] && git config --local core.hooksPath hooks || echo 'Info: Git hooks not set outside a git repository.'"
+  },
+  "devDependencies": {
+    "@actions/core": "1.6.0",
+    "@babel/cli": "7.17.3",
+    "@babel/core": "7.17.5",
+    "@babel/node": "7.16.8",
+    "@babel/preset-env": "7.16.11",
+    "@babel/preset-typescript": "7.16.7",
+    "@commitlint/cli": "16.2.1",
+    "@types/lodash": "4.14.178",
+    "@types/node": "17.0.18",
+    "@typescript-eslint/eslint-plugin": "5.12.0",
+    "@typescript-eslint/parser": "5.12.0",
+    "babel-loader": "8.2.3",
+    "conventional-changelog-conventionalcommits": "4.6.3",
+    "eslint": "8.9.0",
+    "eslint-config-prettier": "8.4.0",
+    "eslint-plugin-import": "2.25.4",
+    "eslint-plugin-json": "3.1.0",
+    "eslint-plugin-markdown": "2.2.1",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "lint-staged": "12.3.4",
+    "lodash": "4.17.21",
+    "node-fetch": "3.2.0",
+    "prettier": "2.5.1",
+    "typescript": "4.5.5"
+  }
+}

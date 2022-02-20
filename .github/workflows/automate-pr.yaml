@@ -1,0 +1,62 @@
+name: Automate PR
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  automate-pr:
+    name: Automate PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Assign author
+        uses: cluenar/actions/assign-pr-author@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add labels
+        uses: cluenar/actions/add-pr-labels@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Approve or request review
+        uses: cluenar/actions/review-pr@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          trusted-user: branoholy
+          release-user: branoholy-bot # TODO Create a bot account (cluenar-bot)
+          reviewer: branoholy
+          # TODO Update approved deps
+          dependency-approved: >-
+            ${{
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-actions-core-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-babel-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-btoa-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-envalid-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-eslint-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-jest-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-nock-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-octokit-openapi-types-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-octokit-rest-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-prettier-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-types-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-typescript-') ||
+              startsWith(github.head_ref, 'dependabot-npm_and_yarn-webpack-') ||
+              startsWith(github.head_ref, 'dependabot-github_actions-actions-cache-') ||
+              startsWith(github.head_ref, 'dependabot-github_actions-actions-checkout-') ||
+              startsWith(github.head_ref, 'dependabot-github_actions-actions-setup-node-') ||
+              startsWith(github.head_ref, 'dependabot-github_actions-octokit-request-action-')
+            }}
+
+      - name: Update title
+        id: update-title
+        uses: cluenar/actions/update-pr-title@main
+        with:
+          token: ${{ secrets.CLUENAR_BOT_TOKEN }}
+
+      - name: Auto-merge
+        uses: cluenar/actions/auto-merge-pr@main
+        with:
+          token: ${{ secrets.CLUENAR_BOT_TOKEN }}
+          title: ${{ steps.update-title.outputs.title }}

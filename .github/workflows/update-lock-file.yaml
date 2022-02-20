@@ -1,6 +1,8 @@
 name: Update lock file
 
 on:
+  schedule:
+    - cron: '0 14 * * 0'
   workflow_dispatch:
   workflow_call:
     inputs:
@@ -32,7 +34,7 @@ jobs:
       - name: Create a pull request with the updated file
         uses: branoholy/update-files-action@main
         with:
-          token: ${{ secrets.token }}
+          token: ${{ secrets.token || secrets.CLUENAR_BOT_TOKEN }}
           branch.name: deps-update-lock-file
           branch.recreate: true
           commit.paths: package-lock.json

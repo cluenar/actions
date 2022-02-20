@@ -1,0 +1,16 @@
+# All hidden files and directories
+.*
+
+# Enable hidden files with extensions
+!.*.*
+
+# Enable all hidden directories
+!.*/
+
+# Git hooks
+hooks/*
+!hooks/*.js
+!hooks/*.ts
+
+# Lock file
+package-lock.json

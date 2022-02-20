@@ -1,0 +1,1 @@
+rm -f .lint-staged-temp-tsconfig.json

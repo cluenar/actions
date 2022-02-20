@@ -1,0 +1,21 @@
+# Enable hidden files with extensions
+!.*.*
+
+# Enable all hidden directories
+!.*/
+
+# Dependencies
+node_modules/
+
+# Git
+.git/
+
+# Git hooks
+hooks/*
+!hooks/*.ts
+
+# Lock file
+package-lock.json
+
+# YAML files
+*.yaml

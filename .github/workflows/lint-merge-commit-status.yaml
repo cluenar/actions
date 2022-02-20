@@ -44,4 +44,4 @@ jobs:
           context: Status / Lint merge commit
           state: ${{ env.LINT_STATE }}
           description: ${{ env.LINT_DESCRIPTION }}
-          GITHUB_TOKEN: ${{ secrets.token }}
+          GITHUB_TOKEN: ${{ secrets.token || secrets.CLUENAR_BOT_TOKEN }}

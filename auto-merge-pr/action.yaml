@@ -21,7 +21,8 @@ runs:
         (
           github.event.pull_request.user.login == 'dependabot[bot]' ||
           github.event.pull_request.user.login == 'github-actions[bot]' ||
-          github.event.pull_request.user.login == 'branoholy-bot'
+          github.event.pull_request.user.login == 'branoholy-bot' ||
+          github.event.pull_request.user.login == 'cluenar-bot'
         )
       uses: octokit/graphql-action@v2.2.20
       with:

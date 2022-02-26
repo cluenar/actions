@@ -14,8 +14,8 @@ jobs:
     name: Update Node.js
     runs-on: ubuntu-latest
     steps:
-      - name: Install
-        uses: cluenar/actions/install@main
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
       - name: Update Node.js versions
         id: update-node-versions
         uses: cluenar/actions/update-node-versions@main
@@ -29,7 +29,6 @@ jobs:
             .nvmrc
             package.json
             package-lock.json
-            .github/workflows/*.yaml
           commit.message: 'deps(dev): Update Node.js to ${{ steps.update-node-versions.outputs.version }}'
           commit.token: ${{ secrets.GITHUB_TOKEN }}
           pull-request.body: Automatic update of Node.js to version ${{ steps.update-node-versions.outputs.version }}.

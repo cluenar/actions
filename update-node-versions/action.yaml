@@ -9,19 +9,28 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Setup action Node.js
+    - name: Get relative path to composite action
+      uses: actions/github-script@v6.0.0
+      id: get-relative-action-path
+      with:
+        script: return require('path').relative('${{ github.workspace }}', '${{ github.action_path }}');
+        result-encoding: string
+    - name: Setup Node.js for composite action
       uses: actions/setup-node@v2.5.1
       with:
-        node-version-file: ${{ github.action_path }}/.nvmrc
-        cache: npm
-        cache-dependency-path: ${{ github.action_path }}/package-lock.json
-    - name: Install action dependencies
-      run: cd ${{ github.action_path }} && npm ci
+        node-version-file: ${{ steps.get-relative-action-path.outputs.result }}/../.nvmrc
+    - name: Install dependencies of composite action
+      run: cd ${{ github.action_path }}/../ && npm ci
       shell: bash
     - name: Update Node.js versions
       id: update-node-versions
-      run: cd ${{ github.action_path }} && npm run node-versions-update "${{ github.workspace }}"
+      run: cd ${{ github.action_path }}/../ && npm run node-versions-update "${{ github.workspace }}"
       shell: bash
+    - name: Setup new Node.js
+      uses: actions/setup-node@v2.5.1
+      with:
+        node-version: ${{ steps.update-node-versions.outputs.version }}
+        cache: npm
     - name: Update the lock file
       run: npm i
       shell: bash

@@ -1,0 +1,27 @@
+name: Update Node.js versions
+description: Update Node.js versions in all files
+
+outputs:
+  version:
+    description: The new version of Node.js
+    value: ${{ steps.update-node-versions.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - name: Setup action Node.js
+      uses: actions/setup-node@v2.5.1
+      with:
+        node-version-file: ${{ github.action_path }}/.nvmrc
+        cache: npm
+        cache-dependency-path: ${{ github.action_path }}/package-lock.json
+    - name: Install action dependencies
+      run: cd ${{ github.action_path }} && npm ci
+      shell: bash
+    - name: Update Node.js versions
+      id: update-node-versions
+      run: cd ${{ github.action_path }} && npm run node-versions-update "${{ github.workspace }}"
+      shell: bash
+    - name: Update the lock file
+      run: npm i
+      shell: bash

@@ -18,7 +18,7 @@ jobs:
         uses: cluenar/actions/install@main
       - name: Update Node.js versions
         id: update-node-versions
-        run: npm run node-versions-update && npm i
+        uses: cluenar/actions/update-node-versions@main
       - name: Create a pull request with the updated files
         uses: branoholy/update-files-action@main
         with:
